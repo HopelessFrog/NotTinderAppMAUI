@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Shell
+    x:Class="NotTinderAppMAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:NotTinderAppMAUI.Pages"
+
+    Title="NotTinderAppMAUI">
+
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate pages:LoginPage}" />
+
+    <TabBar Route="MainPage">
+        <Shell.TitleView>
+            <Grid>
+                <Frame Margin="0,5" HorizontalOptions="Start" Padding="1" VerticalOptions="Center" HeightRequest="55"
+                       WidthRequest="55"
+                       CornerRadius="75"
+                       HasShadow="True" BorderColor="Gray">
+                    <ImageButton HorizontalOptions="Start" Source="exit_icon.svg" Command="{Binding LogoutCommand}" />
+                </Frame>
+                <HorizontalStackLayout HorizontalOptions="End">
+                    <Frame
+                        Margin="3"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        BorderColor="Gray"
+                        CornerRadius="10"
+                        Padding="0"
+                        BackgroundColor="Transparent">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TopUpBalanceCommand }" />
+                        </Frame.GestureRecognizers>
+                        <HorizontalStackLayout Padding="0">
+                            <Label
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center"
+                                MinimumWidthRequest="50"
+                                FontSize="25"
+                                Text="{Binding Balance}"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill" />
+                            <Image HeightRequest="40" WidthRequest="40" Source="dino_coin.svg" />
+                        </HorizontalStackLayout>
+
+                    </Frame>
+                    <Frame CornerRadius="15" Padding="0">
+                        <HorizontalStackLayout>
+                            <Label VerticalOptions="Center" FontSize="20"
+                                   FontAutoScalingEnabled="True"
+                                   Text="{Binding Name}" FontAttributes="Bold" />
+                            <Frame Padding="0" VerticalOptions="Center" Margin="3" HeightRequest="55" WidthRequest="55"
+                                   CornerRadius="75"
+                                   HasShadow="True" BorderColor="Gray">
+                                <Image HorizontalOptions="Fill" VerticalOptions="Fill" Source="dino_register.svg"
+                                       Aspect="AspectFill" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </HorizontalStackLayout>
+            </Grid>
+        </Shell.TitleView>
+        <Tab Title="My startups" Icon="my_startups.svg">
+            <ShellContent ContentTemplate="{DataTemplate pages:MyStartupsPage}" />
+        </Tab>
+        <Tab Icon="startups.svg" Title="Startups">
+            <ShellContent ContentTemplate="{DataTemplate pages:StartupsPage}" />
+        </Tab>
+        <Tab Title="Tops" Icon="tops.svg">
+            <ShellContent Title="Top startups" Icon="startups.svg"
+                          ContentTemplate="{DataTemplate pages:TopStartupsPage}" />
+            <ShellContent Title="Top donaters" Icon="donation.svg"
+                          ContentTemplate="{DataTemplate pages:TopsDonatersPage}" />
+
+        </Tab>
+        <Tab Icon="admin.svg" Title="Admin" IsVisible="{Binding IsAdmin}">
+            <ShellContent ContentTemplate="{DataTemplate pages:AdminPage}" />
+        </Tab>
+
+    </TabBar>
+    <Shell.FlyoutHeader>
+
+    </Shell.FlyoutHeader>
+
+</Shell>

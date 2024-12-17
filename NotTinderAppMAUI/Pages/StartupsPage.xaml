@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotTinderAppMAUI.Pages.StartupsPage"
+             xmlns:converters="clr-namespace:NotTinderAppMAUI.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="this">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded"
+                                        Command="{Binding Source={x:Reference this}, Path=BindingContext.GetStartupsCommand }" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DevMobileLocalhostConverter x:Key="DevMobileLocalhostConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Frame Margin="0,3" Padding="0">
+
+                <RefreshView Command="{Binding GetStartupsCommand}" IsRefreshing="{Binding IsRefreshing}">
+
+                    <CarouselView ItemsSource="{Binding Startups}"
+                                  Loop="False"
+                                  IsSwipeEnabled="True"
+                                  IsScrolling="False"
+                                  VerticalOptions="Fill"
+                                  CurrentItem="{Binding CurrentStartup}"
+                                  VerticalScrollBarVisibility="Never"
+                                  RemainingItemsThreshold="1"
+                                  RemainingItemsThresholdReachedCommand="{Binding UpdateStartupsCommand}"
+                                  PeekAreaInsets="30">
+
+
+                        <CarouselView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" SnapPointsType="MandatorySingle"
+                                               SnapPointsAlignment="Center" />
+                        </CarouselView.ItemsLayout>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame VerticalOptions="Fill" HasShadow="True" CornerRadius="10" Margin="10"
+                                       Padding="0">
+                                    <Grid VerticalOptions="Fill">
+                                        <CarouselView VerticalOptions="Fill" ItemsSource="{Binding Images}">
+                                            <CarouselView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Image
+                                                        HeightRequest="750"
+                                                        Aspect="Fill"
+                                                        VerticalOptions="Fill"
+                                                        Source="{Binding . , Mode=OneWay, Converter={StaticResource DevMobileLocalhostConverter}}" />
+
+                                                </DataTemplate>
+                                            </CarouselView.ItemTemplate>
+                                        </CarouselView>
+                                        <Grid VerticalOptions="End">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <HorizontalStackLayout HorizontalOptions="Start">
+                                                <Frame Padding="0" VerticalOptions="Center" Margin="3"
+                                                       HeightRequest="80"
+                                                       WidthRequest="80"
+                                                       CornerRadius="75"
+                                                       HasShadow="True" BorderColor="Gray">
+                                                    <Frame.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type CarouselView}}, Path=BindingContext.OpenStartupCommand}"
+                                                            CommandParameter="{Binding}" />
+                                                    </Frame.GestureRecognizers>
+
+                                                    <Image HorizontalOptions="Fill" VerticalOptions="Fill"
+                                                           Source="{Binding Icon, Converter={StaticResource DevMobileLocalhostConverter}}"
+                                                           Aspect="AspectFill" />
+                                                </Frame>
+                                                <Label FontSize="23" HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding Name}" />
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Grid.Column="1" VerticalOptions="Center"
+                                                                   HorizontalOptions="End">
+                                                <HorizontalStackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type CarouselView}}, Path=BindingContext.DonateCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                                </HorizontalStackLayout.GestureRecognizers>
+                                                <Label LineBreakMode="TailTruncation" MaximumWidthRequest="80"
+                                                       FontSize="20"
+                                                       VerticalOptions="Center" Text="{Binding Donated}" />
+                                                <Label FontSize="20" VerticalOptions="Center" Text="/" />
+                                                <Label LineBreakMode="TailTruncation" MaximumWidthRequest="80"
+                                                       FontSize="20"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding DonationTarget}" />
+
+
+                                                <Image Margin="5,5" HeightRequest="50" HorizontalOptions="Fill"
+                                                       VerticalOptions="Fill"
+                                                       Source="dino_coin.svg"
+                                                       Aspect="AspectFill" />
+                                            </HorizontalStackLayout>
+
+                                        </Grid>
+
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </RefreshView>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

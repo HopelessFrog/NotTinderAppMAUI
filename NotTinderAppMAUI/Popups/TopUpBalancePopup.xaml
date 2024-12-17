@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               Color="Transparent"
+               xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+               x:Class="NotTinderAppMAUI.Popups.TopAppBalancePopup">
+
+    <Frame CornerRadius="15">
+        <Frame.Behaviors>
+            <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding LoadPointsCommand}" />
+        </Frame.Behaviors>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+
+            <lvc:CartesianChart
+                HorizontalOptions="Fill"
+                Series="{Binding Series}"
+                XAxes="{Binding XAxes}"
+                YAxes="{Binding YAxes}"
+                ZoomMode="X" />
+
+
+            <Frame Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Center">
+
+                <HorizontalStackLayout VerticalOptions="Start" HorizontalOptions="Center">
+                    <Label VerticalOptions="Center" FontSize="25" Text="1" />
+                    <Image VerticalOptions="Center" HeightRequest="40" WidthRequest="40" Source="dino_coin.svg" />
+                    <Label VerticalOptions="Center" FontSize="25" Text=" = " />
+
+                    <Label VerticalOptions="Center" FontSize="25" Text="{Binding ExchangeRate}" />
+                    <Label VerticalOptions="Center" FontSize="25" Text="$" />
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center">
+
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0">
+                    <Entry
+                        TextChanged="InputView_OnTextChanged"
+                        Keyboard="Numeric"
+                        MinimumWidthRequest="80"
+                        FontSize="20"
+                        Text="{Binding Balance}"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />
+                    <Image HeightRequest="40" WidthRequest="40" Source="dino_coin.svg" />
+                </HorizontalStackLayout>
+            </Frame>
+            <Button Grid.Row="3" Command="{Binding BuyCoinsCommand}" FontSize="25" HorizontalOptions="Center"
+                    VerticalOptions="Center" Text=" Buy" />
+
+        </Grid>
+
+
+    </Frame>
+
+</toolkit:Popup>

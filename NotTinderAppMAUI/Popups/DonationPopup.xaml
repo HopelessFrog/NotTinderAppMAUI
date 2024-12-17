@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               Size="350, 250"
+
+               VerticalOptions="End"
+               Color="Transparent"
+               x:Class="NotTinderAppMAUI.Popups.DonationPopup">
+    <Frame VerticalOptions="Start" CornerRadius="15" Margin="20,20,20,100">
+        <StackLayout Spacing="20" VerticalOptions="Center" HorizontalOptions="Center">
+
+            <HorizontalStackLayout>
+                <Entry Text="{Binding DonationAmount, Mode=TwoWay}"
+                       Keyboard="Numeric"
+                       FontSize="18"
+                       HorizontalTextAlignment="Center"
+                       Placeholder="Donation amount"
+                       MaxLength="10" />
+                <Image Margin="5,5" HeightRequest="50" HorizontalOptions="Fill"
+                       VerticalOptions="Fill"
+                       Source="dino_coin.svg"
+                       Aspect="AspectFill" />
+
+            </HorizontalStackLayout>
+
+
+            <Slider
+                ThumbImageSource="dino_slider.svg"
+                MaximumHeightRequest="60"
+
+                Minimum="1"
+                Maximum="{Binding Balance , Mode=OneWay}"
+                Value="{Binding DonationAmount, Mode=TwoWay}"
+                ThumbColor="{StaticResource Primary}" />
+
+
+            <Button Text="Donate"
+                    Margin="15"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontSize="18"
+                    Command="{Binding DonationCommand}"
+                    CornerRadius="10" />
+        </StackLayout>
+    </Frame>
+</toolkit:Popup>

@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               Size="350,700"
+               Color="Transparent"
+               x:Class="NotTinderAppMAUI.Popups.UpdateStartupPopup">
+
+    <Frame CornerRadius="15">
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="2.5*" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <VerticalStackLayout>
+                        <Frame Padding="0" VerticalOptions="Center" Margin="3" HeightRequest="80" WidthRequest="80"
+                               CornerRadius="75"
+                               HasShadow="True" BorderColor="Gray">
+                            <Image HorizontalOptions="Fill" VerticalOptions="Fill" Source="{Binding Icon.Image}"
+                                   Aspect="AspectFill">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding PickIconCommand}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                        <Label HorizontalOptions="Center" Text="Icon" />
+                    </VerticalStackLayout>
+                    <Entry Text="{Binding Name}" Margin="10,10,10,40" VerticalOptions="Center" Grid.Column="1"
+                           Placeholder="Name" />
+
+                </Grid>
+                <Grid Grid.Row="1" HeightRequest="300">
+
+                    <Grid>
+                        <CollectionView ItemsSource="{Binding Images}"
+                                        HorizontalScrollBarVisibility="Never"
+                                        ItemsLayout="HorizontalList">
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid WidthRequest="150" HeightRequest="250" Margin="3,10">
+
+
+                                        <Frame Padding="0" CornerRadius="15">
+                                            <Image HorizontalOptions="Fill" VerticalOptions="Fill"
+                                                   Source="{Binding Image }"
+                                                   Aspect="Fill" />
+
+                                        </Frame>
+                                        <Grid HorizontalOptions="End" VerticalOptions="Start" Margin="2">
+                                            <VerticalStackLayout Spacing="10">
+                                                <ImageButton
+                                                    Opacity="0.6"
+                                                    Source="delete_icon.svg"
+                                                    HeightRequest="30" WidthRequest="30"
+                                                    Command="{Binding    Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.DeleteImageCommand }"
+
+                                                    CommandParameter="{Binding}" />
+
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Frame x:Name="EmptyPlate" Margin="3,10" IsVisible="{Binding IsImagesNotAdded}"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill">
+                            <HorizontalStackLayout Opacity="0.5" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image HeightRequest="50" WidthRequest="50" Source="image_icon.svg" />
+                                <Label VerticalOptions="Center" Text="Images" />
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <Button
+                            Text="+"
+                            ZIndex="1500"
+                            FontSize="24"
+                            CornerRadius="360"
+                            HorizontalOptions="End"
+                            VerticalOptions="End"
+                            Command="{Binding AddImageCommand}" />
+
+                    </Grid>
+
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid Margin="3,10">
+                        <Label ZIndex="100" Text="Description"
+                               FontSize="14"
+                               BackgroundColor="White"
+                               Padding="2"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Start"
+                               Margin="10, -10, 0, 0" />
+
+                        <Frame
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            BorderColor="Gray"
+                            CornerRadius="10"
+                            Padding="10"
+                            BackgroundColor="Transparent">
+                            <Editor
+                                AutoSize="TextChanges"
+                                FontSize="16"
+                                Text="{Binding  Description}"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill" />
+                        </Frame>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid Margin="3,10">
+                        <Label ZIndex="100" Text="Donation target"
+                               FontSize="14"
+                               BackgroundColor="White"
+                               Padding="2"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Start"
+                               Margin="10, -10, 0, 0" />
+
+                        <Frame
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            BorderColor="Gray"
+                            CornerRadius="10"
+                            Padding="10"
+                            BackgroundColor="Transparent">
+                            <HorizontalStackLayout>
+                                <Entry
+                                    WidthRequest="230"
+                                    FontSize="16"
+                                    Text="{Binding DonationTarget}"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Fill" />
+                                <Image HeightRequest="40" WidthRequest="40" Source="dino_coin.svg" />
+                            </HorizontalStackLayout>
+
+                        </Frame>
+                    </Grid>
+                </Grid>
+                <Button Grid.Row="4" Command="{Binding PutStartupCommand}" HorizontalOptions="Center"
+                        VerticalOptions="Center" Text="Save" />
+
+            </Grid>
+
+
+        </ScrollView>
+
+    </Frame>
+</toolkit:Popup>

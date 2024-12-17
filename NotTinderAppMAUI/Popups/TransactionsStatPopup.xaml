@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               Color="Transparent"
+               x:Class="NotTinderAppMAUI.Popups.TransactionsStatPopup">
+    <Frame Margin="20" Padding="0">
+
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadTransactionsCommand}">
+
+            <Grid>
+
+                <CollectionView ItemsSource="{Binding Transactions}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Frame CornerRadius="15">
+                                    <VerticalStackLayout Margin="0,10,0,0" Spacing="10">
+                                        <Grid Margin="0,10,0,0">
+                                            <Label ZIndex="100" FontSize="20" Text="Id"
+                                                   BackgroundColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Start"
+                                                   Margin="10, -10, 0, 0" />
+                                            <Frame BorderColor="Gray" Margin="5" CornerRadius="10" Padding="10">
+                                                <Label Text="{Binding Id}"
+                                                       HorizontalTextAlignment="Center" />
+                                            </Frame>
+                                        </Grid>
+                                        <Grid>
+                                            <Label ZIndex="100" FontSize="20" Text="User Id"
+                                                   BackgroundColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Start"
+                                                   Margin="10, -10, 0, 0" />
+                                            <Frame BorderColor="Gray" Margin="5" CornerRadius="10" Padding="10">
+                                                <Label Text="{Binding UserId}"
+                                                       HorizontalTextAlignment="Center" />
+                                            </Frame>
+                                        </Grid>
+                                        <Grid>
+                                            <Label ZIndex="100" FontSize="20" Text="Startup Id"
+                                                   BackgroundColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Start"
+                                                   Margin="10, -10, 0, 0" />
+                                            <Frame BorderColor="Gray" Margin="5" CornerRadius="10" Padding="10">
+                                                <Label Text="{Binding StartupId}"
+                                                       HorizontalTextAlignment="Center" />
+                                            </Frame>
+                                        </Grid>
+                                        <Grid>
+                                            <Label ZIndex="100" FontSize="20" Text="Date"
+                                                   BackgroundColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Start"
+                                                   Margin="10, -10, 0, 0" />
+                                            <Frame BorderColor="Gray" Margin="5" CornerRadius="10" Padding="10">
+                                                <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
+                                                       HorizontalTextAlignment="Center" />
+                                            </Frame>
+                                        </Grid>
+                                        <Grid>
+                                            <Label ZIndex="100" FontSize="20" Text="Amount"
+                                                   BackgroundColor="White"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Start"
+                                                   Margin="10, -10, 0, 0" />
+                                            <Frame BorderColor="Gray" Margin="5" CornerRadius="10" Padding="10">
+                                                <HorizontalStackLayout HorizontalOptions="Center">
+                                                    <Label Text="{Binding Amount}"
+                                                           VerticalOptions="Center"
+                                                           HorizontalTextAlignment="Center" />
+                                                    <Image Margin="5,5" HeightRequest="30" HorizontalOptions="Fill"
+                                                           VerticalOptions="Fill"
+                                                           Source="dino_coin.svg"
+                                                           Aspect="AspectFill" />
+                                                </HorizontalStackLayout>
+
+                                            </Frame>
+                                        </Grid>
+                                    </VerticalStackLayout>
+
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Frame Margin="3,10" IsVisible="{Binding IsTransactionNot}"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Fill">
+                    <HorizontalStackLayout Opacity="0.5" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label VerticalOptions="Center" Text="Not transactions yeat" />
+                    </HorizontalStackLayout>
+                </Frame>
+            </Grid>
+
+        </RefreshView>
+    </Frame>
+</toolkit:Popup>

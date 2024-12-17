@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NotTinderAppMAUI.Pages.LoginPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+
+        <Frame BackgroundColor="LightGrey" ZIndex="1000" Margin="20" HorizontalOptions="Center"
+               VerticalOptions="Center" Opacity="0.7" CornerRadius="15" IsVisible="{Binding IsBusy}">
+            <ActivityIndicator ZIndex="1500" Color="{StaticResource Primary}" WidthRequest="60" HeightRequest="60"
+                               IsRunning="{Binding IsBusy  }" />
+        </Frame>
+
+
+        <Grid>
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition />
+
+            </Grid.RowDefinitions>
+
+
+            <StackLayout>
+                <Frame
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="30"
+                    BorderColor="{StaticResource Primary}"
+
+                    Margin="30"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <VerticalStackLayout HorizontalOptions="CenterAndExpand">
+                        <Image
+                            Source="dino_coin.svg"
+                            HeightRequest="200"
+                            Aspect="AspectFit" />
+                        <Label Margin="10" Style="{StaticResource Headline}" HorizontalOptions="Center">DinoVest</Label>
+                    </VerticalStackLayout>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Orientation="Vertical">
+
+                <Frame Margin="10,25,10,0" BorderColor="{StaticResource Primary}" HorizontalOptions="FillAndExpand"
+                       CornerRadius="30"
+                       Padding="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame BackgroundColor="{StaticResource Primary}" BorderColor="{StaticResource PrimaryDark}"
+                               Padding="0" WidthRequest="40"
+                               HeightRequest="40" CornerRadius="30" Margin="5">
+                            <Image Margin="1" Source="login.svg" MaximumWidthRequest="30"
+                                   MaximumHeightRequest="30" Aspect="AspectFit"
+                                   HorizontalOptions="Fill" />
+                        </Frame>
+
+                        <Entry Text="{Binding Login}" FontSize="25" Placeholder="Login" VerticalOptions="Center"
+                               HorizontalOptions="FillAndExpand" Margin="0,0,30,0" />
+                    </StackLayout>
+                </Frame>
+
+
+                <Frame Margin="10,25,10,0" BorderColor="{StaticResource Primary}" HorizontalOptions="Fill"
+                       CornerRadius="30" Padding="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame BorderColor="{StaticResource PrimaryDark}" BackgroundColor="{StaticResource Primary}"
+                               Padding="0" WidthRequest="40"
+                               HeightRequest="40" CornerRadius="30" Margin="5">
+                            <Image Margin="1" Source="password.svg" MaximumWidthRequest="30"
+                                   MaximumHeightRequest="30"
+                                   Aspect="AspectFit"
+                                   HorizontalOptions="FillAndExpand" />
+                        </Frame>
+
+                        <Entry Text="{Binding Password}" FontSize="25" IsPassword="True" Placeholder="Password"
+                               VerticalOptions="Center"
+                               HorizontalOptions="FillAndExpand" Margin="0,0,30,0" />
+                    </StackLayout>
+                </Frame>
+
+
+            </StackLayout>
+
+            <StackLayout Grid.Row="2">
+                <Button Command="{Binding TryLoginCommand}" Margin="15" FontSize="30" HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center" Text="Login" Style="{DynamicResource FilledButtonStyle}" />
+                <Label Margin="20,0,0,0" Text="Sign Up" TextColor="{StaticResource Secondary}" FontAttributes="Bold"
+                       FontSize="Small">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+        </Grid>
+    </Grid>
+</ContentPage>

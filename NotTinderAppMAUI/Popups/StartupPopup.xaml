@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:converters="clr-namespace:NotTinderAppMAUI.Converters"
+               Color="Transparent"
+               Size="350,700"
+               x:Class="NotTinderAppMAUI.Popups.StartupPopup">
+
+    <toolkit:Popup.Resources>
+        <ResourceDictionary>
+            <converters:DevMobileLocalhostConverter x:Key="DevMobileLocalhostConverter" />
+        </ResourceDictionary>
+    </toolkit:Popup.Resources>
+    <Frame CornerRadius="15">
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="4*" />
+
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <VerticalStackLayout>
+                        <Frame Padding="0" VerticalOptions="Center" Margin="3" HeightRequest="80" WidthRequest="80"
+                               CornerRadius="75"
+                               HasShadow="True" BorderColor="Gray">
+                            <Image HorizontalOptions="Fill" VerticalOptions="Fill"
+                                   Source="{Binding Startup.Icon, Converter={StaticResource DevMobileLocalhostConverter}}"
+                                   Aspect="AspectFill" />
+                        </Frame>
+                    </VerticalStackLayout>
+                    <Label Text="{Binding Startup.Name}" Margin="10,10,10,10" HorizontalOptions="Fill" FontSize="30"
+                           VerticalOptions="Center" Grid.Column="1" />
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Label ZIndex="100" FontSize="20" Text="Images"
+                           BackgroundColor="White"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Start"
+                           Margin="10, -10, 0, 0" />
+                    <Frame BorderColor="Gray" Margin="5" CornerRadius="10" Padding="10">
+                        <StackLayout>
+
+                            <CollectionView ItemsSource="{Binding Startup.Images}"
+                                            HorizontalScrollBarVisibility="Never"
+                                            ItemsLayout="HorizontalList">
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid WidthRequest="75" HeightRequest="125" Margin="3,10">
+
+                                            <Frame Padding="0" Margin="0" CornerRadius="15">
+                                                <Image HorizontalOptions="Fill" VerticalOptions="Fill"
+                                                       Source="{Binding ., Converter={StaticResource DevMobileLocalhostConverter}}"
+                                                       Aspect="Fill">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.OpenImageCommand}"
+                                                            CommandParameter="{Binding}" />
+                                                    </Image.GestureRecognizers>
+
+                                                </Image>
+
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <VerticalStackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <HorizontalStackLayout VerticalOptions="Center">
+                                <Label LineBreakMode="TailTruncation" MaximumWidthRequest="80" FontSize="20"
+                                       VerticalOptions="Center" Text="{Binding Startup.Donated}" />
+                                <Label FontSize="20" VerticalOptions="Center" Text="/" />
+                                <Label LineBreakMode="TailTruncation" MaximumWidthRequest="80" FontSize="20"
+                                       VerticalOptions="Center"
+                                       Text="{Binding Startup.DonationTarget}" />
+
+
+                                <Image Margin="5,5" HeightRequest="50" HorizontalOptions="Fill"
+                                       VerticalOptions="Fill"
+                                       Source="dino_coin.svg"
+                                       Aspect="AspectFill" />
+                            </HorizontalStackLayout>
+                            <Frame IsVisible="{Binding CanDonate}" Margin="10" Padding="0" HorizontalOptions="End"
+                                   VerticalOptions="Center"
+                                   CornerRadius="360" Grid.Column="1" BackgroundColor="{StaticResource Primary}">
+                                <ImageButton IsVisible="{Binding CanDonate}" Aspect="Fill"
+                                             Command="{Binding DonateCommand}" WidthRequest="60"
+                                             HeightRequest="60" Source="donation.svg" />
+                            </Frame>
+
+                        </Grid>
+                        <toolkit:Expander VerticalOptions="Start" Margin="2">
+                            <toolkit:Expander.Header>
+                                <Frame>
+                                    <StackLayout Orientation="Horizontal" Padding="5" Spacing="10">
+
+                                        <Image Source="posts.png" WidthRequest="20" HeightRequest="20" />
+                                        <Label Text="Description" FontSize="18" />
+                                    </StackLayout>
+                                </Frame>
+                            </toolkit:Expander.Header>
+                            <toolkit:Expander.Content>
+                                <Frame MaximumHeightRequest="150" BackgroundColor="WhiteSmoke" CornerRadius="5"
+                                       Padding="10">
+                                    <ScrollView VerticalScrollBarVisibility="Never"
+                                                HorizontalScrollBarVisibility="Never">
+                                        <Label
+                                            Text="{Binding Startup.Description}"
+                                            FontSize="16" TextColor="Black" />
+
+                                    </ScrollView>
+
+                                </Frame>
+                            </toolkit:Expander.Content>
+                        </toolkit:Expander>
+                        <Grid Margin="2,10">
+                            <Label ZIndex="100" FontSize="20" Text="Donaters"
+                                   BackgroundColor="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Start"
+                                   Margin="10, -10, 0, 0" />
+                            <Frame CornerRadius="15">
+                                <RefreshView HeightRequest="150" Command="{Binding LoadDonatersCommand}"
+                                             IsRefreshing="{Binding IsRefreshing}">
+                                    <CollectionView ItemsSource="{Binding Donaters}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Frame CornerRadius="30" Padding="1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="2*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Frame Margin="5" HorizontalOptions="Center"
+                                                               VerticalOptions="Center"
+                                                               CornerRadius="75" Padding="5">
+                                                            <Image Source="dino_register.svg" WidthRequest="50"
+                                                                   HeightRequest="50"
+                                                                   Aspect="Fill" />
+                                                        </Frame>
+
+                                                        <Grid Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+
+                                                            <Label VerticalOptions="End" FontSize="20"
+                                                                   FontAutoScalingEnabled="True"
+                                                                   Text="{Binding Name}" FontAttributes="Bold" />
+
+                                                            <HorizontalStackLayout Grid.Row="1" Margin="5"
+                                                                VerticalOptions="End">
+                                                                <Label VerticalOptions="Center"
+                                                                       FontSize="20"
+                                                                       FontAutoScalingEnabled="True"
+                                                                       Text="{Binding Donated}" />
+                                                                <Image Margin="5,5" HeightRequest="30"
+                                                                       VerticalOptions="Fill"
+                                                                       Source="dino_coin.svg"
+                                                                       Aspect="AspectFill" />
+                                                            </HorizontalStackLayout>
+
+                                                        </Grid>
+                                                    </Grid>
+
+                                                </Frame>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </RefreshView>
+                            </Frame>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </Grid>
+
+
+            </Grid>
+
+
+        </ScrollView>
+    </Frame>
+</toolkit:Popup>

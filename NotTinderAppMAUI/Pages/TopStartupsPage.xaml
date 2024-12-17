@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:NotTinderAppMAUI.Converters"
+             x:Class="NotTinderAppMAUI.Pages.TopStartupsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DevMobileLocalhostConverter x:Key="DevMobileLocalhostConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Frame Margin="0,3" Padding="0">
+            <RefreshView Command="{Binding LoadStartuosCommand}" IsRefreshing="{Binding IsRefreshing}">
+                <CollectionView ItemsSource="{Binding Startups}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="10" Margin="5,5" CornerRadius="30" BorderColor="Gray">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.OpenStartupCommand}"
+                                        CommandParameter="{Binding}" />
+                                </Frame.GestureRecognizers>
+                                <Grid>
+                                    <HorizontalStackLayout HorizontalOptions="Start">
+
+                                        <Frame Padding="0" VerticalOptions="Center" Margin="3"
+                                               HeightRequest="60"
+                                               WidthRequest="60"
+                                               CornerRadius="75"
+                                               HasShadow="True" BorderColor="Gray">
+
+                                            <Image HorizontalOptions="Fill" VerticalOptions="Fill"
+                                                   Source="{Binding Icon, Converter={StaticResource DevMobileLocalhostConverter}}"
+                                                   Aspect="AspectFill" />
+
+                                        </Frame>
+                                        <Label FontSize="20" HorizontalOptions="Start"
+                                               VerticalOptions="Center"
+                                               Text="{Binding Name}" MaximumWidthRequest="150"
+                                               LineBreakMode="TailTruncation" />
+                                    </HorizontalStackLayout>
+
+
+                                    <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center"
+                                                           Margin="20,10">
+                                        <Label LineBreakMode="TailTruncation" MaximumWidthRequest="80"
+                                               FontSize="20" VerticalOptions="Center" Text="{Binding Donated}" />
+
+                                        <Image Margin="5,5" HeightRequest="50" HorizontalOptions="Fill"
+                                               VerticalOptions="Fill"
+                                               Source="dino_coin.svg"
+                                               Aspect="AspectFill" />
+
+                                    </HorizontalStackLayout>
+
+
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>

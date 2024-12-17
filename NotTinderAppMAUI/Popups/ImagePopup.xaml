@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:converters="clr-namespace:NotTinderAppMAUI.Converters"
+    Color="Transparent"
+    x:Class="NotTinderAppMAUI.Popups.ImagePopup"
+    Size="350,700">
+
+    <toolkit:Popup.Resources>
+        <ResourceDictionary>
+            <converters:DevMobileLocalhostConverter x:Key="DevMobileLocalhostConverter" />
+        </ResourceDictionary>
+    </toolkit:Popup.Resources>
+
+    <Frame Padding="0" CornerRadius="15">
+        <Image HorizontalOptions="Fill" VerticalOptions="Fill" Aspect="Fill"
+               Source="{Binding Image, Converter={StaticResource DevMobileLocalhostConverter}}" />
+    </Frame>
+
+</toolkit:Popup>
