@@ -38,13 +38,18 @@
                     Margin="30"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand">
-                    <VerticalStackLayout HorizontalOptions="CenterAndExpand">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
                         <Image
                             Source="dino_coin.svg"
-                            HeightRequest="200"
                             Aspect="AspectFit" />
-                        <Label Margin="10" Style="{StaticResource Headline}" HorizontalOptions="Center">DinoVest</Label>
-                    </VerticalStackLayout>
+                        <Label Grid.Row="1" Margin="10" Style="{StaticResource Headline}" HorizontalOptions="Center">DinoVest</Label>
+                    </Grid>
+                      
                 </Frame>
             </StackLayout>
 
